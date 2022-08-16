@@ -1,0 +1,17 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const connection = require('./config/connection');
+const routes = require("./routes");
+
+const PORT = process.env.port || 3001;
+const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(routes);
+
+connection.once('open', () => {
+  app.listen(PORT, () => {
+    console.log(`API server for social media is running on port ${PORT}!`);
+  });
+});
